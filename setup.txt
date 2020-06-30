@@ -1,0 +1,18 @@
+adduser calvin
+
+yum install sudo
+
+usermod -aG wheel calvin
+
+mysql root Africa84* 
+
+usermod -aG wheel calvin
+
+nohup java -jar -Dspring.profiles.active=dev -Dserver.port=9290 ibs-0.0.1-SNAPSHOT.jar &
+
+
+scp -P 3837 ibs-0.0.1-SNAPSHOT.jar calvin@104.251.211.151:/home/calvin
+
+
+
+curl -X POST "http://core-bank-gateway.nonprod.ocp.absa.co.za/makola/core-banking-gateway/MUS/accounting-entries" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"country\": \"MUS\", \"consolidated\": true, \"credit\": { \"accountNumber\": \"1068332\", \"amount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"branchNumber\": \"15\", \"ccyAmount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"counterPartyName\": \"string\", \"extendedNarrative\": \"\", \"narrative\": \"SALA\", \"transactionType\": \"SALA\", \"unclearedCcyAmount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"unclearedLocalAmount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"valueDateIndicator\": \"TODAY\", \"valueDays\": 0 }, \"debit\": { \"accountNumber\": \"2997484\", \"amount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"branchNumber\": \"15\", \"ccyAmount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"extendedNarrative\": \"\", \"forcePost\": true, \"narrative\": \"SALA\", \"transactionType\": \"SALA\", \"unclearedCcyAmount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"unclearedLocalAmount\": { \"amount\": 10, \"currency\": \"MUR\" }, \"valueDateIndicator\": \"TODAY\", \"valueDays\": 0 }, \"sourceChannel\": \"GCP\", \"sourceChannelReference\": \"Makola\", \"valueDateIndicator\": \"TODAY\", \"valueDays\": 0}"
