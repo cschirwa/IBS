@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 //import io.jsonwebtoken.Claims;
 //import io.jsonwebtoken.Jwts;
 //import io.jsonwebtoken.SignatureAlgorithm;
@@ -76,35 +80,35 @@ public class JwtTokenUtil implements Serializable {
         return ((lastPasswordReset != null) && created.before(lastPasswordReset));
     }
 
-    private String generateAudience(final Device device) {
-        String audience = AUDIENCE_UNKNOWN;
-        if (device.isNormal()) {
-            audience = AUDIENCE_WEB;
-        } else if (device.isTablet()) {
-            audience = AUDIENCE_TABLET;
-        } else if (device.isMobile()) {
-            audience = AUDIENCE_MOBILE;
-        }
-        return audience;
-    }
+//    private String generateAudience(final Device device) {
+//        String audience = AUDIENCE_UNKNOWN;
+//        if (device.isNormal()) {
+//            audience = AUDIENCE_WEB;
+//        } else if (device.isTablet()) {
+//            audience = AUDIENCE_TABLET;
+//        } else if (device.isMobile()) {
+//            audience = AUDIENCE_MOBILE;
+//        }
+//        return audience;
+//    }
 
     private Boolean ignoreTokenExpiration(final String token) {
         String audience = getAudienceFromToken(token);
         return (AUDIENCE_TABLET.equals(audience) || AUDIENCE_MOBILE.equals(audience));
     }
 
-    public String generateToken(final UserDetails userDetails, final Device device) {
+    public String generateToken(final UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername(), generateAudience(device));
+        return doGenerateToken(claims, userDetails.getUsername());
     }
 
-    private String doGenerateToken(final Map<String, Object> claims, final String subject, final String audience) {
+    private String doGenerateToken(final Map<String, Object> claims, final String subject) {
         final Date createdDate = timeProvider.now();
         final Date expirationDate = calculateExpirationDate(createdDate);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setAudience(audience)
+//                .setAudience(audience)
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, secret)

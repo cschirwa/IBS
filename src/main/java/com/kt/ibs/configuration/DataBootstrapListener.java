@@ -1,8 +1,10 @@
 package com.kt.ibs.configuration;
 
-import com.ibs.entity.*;
-import com.ibs.entity.Currency;
-import com.ibs.repository.*;
+import com.kt.ibs.entity.*;
+import com.kt.ibs.entity.Currency;
+import com.kt.ibs.repository.*;
+import com.kt.ibs.repository.CustomerRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

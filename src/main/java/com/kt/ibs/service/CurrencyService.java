@@ -1,6 +1,7 @@
 package com.kt.ibs.service;
 
 import com.kt.ibs.constants.Constants;
+
 import com.kt.ibs.entity.Currency;
 import com.kt.ibs.exceptions.IBSException;
 import com.kt.ibs.repository.CurrencyRepository;
@@ -8,7 +9,9 @@ import com.kt.ibs.response.RestResponse;
 import com.kt.ibs.validations.CreateCurrencyValidator;
 import com.kt.ibs.validations.InputOutputResults;
 import com.kt.ibs.validations.Notifications;
-import org.apache.log4j.Logger;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,10 @@ import java.util.Set;
 import static com.kt.ibs.constants.Constants.CODEERROR;
 import static com.kt.ibs.constants.Constants.LEVELERROR;
 
+@Slf4j
 @Service
 public class CurrencyService {
 
-    private final static Logger LOGGER = Logger.getLogger(CurrencyService.class);
     @Autowired
     private CurrencyRepository currencyRepository;
 
@@ -48,7 +51,7 @@ public class CurrencyService {
             restServiceResponse.setServiceResponseHeader(inputOutputResults.determineResponse(responseNotificationMessages));
         }
 
-        LOGGER.info("service task is complete");
+        log.info("service task is complete");
 
         return restServiceResponse;
     }

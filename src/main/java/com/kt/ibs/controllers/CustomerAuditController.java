@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibs.controllers.vo.CustomerAuditOutput;
-import com.ibs.exceptions.IBSException;
+import com.kt.ibs.controllers.vo.CustomerAuditOutput;
+import com.kt.ibs.exceptions.IBSException;
 import com.kt.ibs.response.RestResponse;
 import com.kt.ibs.security.JwtTokenUtil;
 import com.kt.ibs.service.CustomerService;

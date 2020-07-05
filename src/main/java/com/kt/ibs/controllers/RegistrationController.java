@@ -2,7 +2,6 @@ package com.kt.ibs.controllers;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RegistrationController {
 
-    private static final Logger LOGGER = Logger.getLogger(RegistrationController.class);
     private static final String REQUEST = "REQUEST";
     private static final String RESPONSE = "RESPONSE";
 
@@ -40,7 +38,7 @@ public class RegistrationController {
     @ResponseBody
     public ResponseEntity registerCustomer(
             @RequestBody @Valid CustomerRegInput input) throws IBSException {
-        LOGGER.info("IBS register new customer : " + input);
+        log.info("IBS register new customer : " + input);
         RestResponse restResponse = customerService.registerCustomer(input);
         return ResponseEntity
                 .status(HttpStatus.OK)

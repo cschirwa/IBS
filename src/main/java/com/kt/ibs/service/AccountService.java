@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,7 @@ import com.kt.ibs.validations.CreateAccountValidator;
 import com.kt.ibs.validations.InputOutputResults;
 import com.kt.ibs.validations.Notifications;
 
+import antlr.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -119,7 +119,7 @@ public class AccountService {
             coreCurrency = accountDetails.getCurrency().trim();
         }
         Currency currency = currencyRepository.findByCode(coreCurrency);
-        if ((currency == null) && !StringUtils.isEmpty(coreCurrency)) {
+        if (currency == null) {
             log.info("Adding currency {}", coreCurrency);
             currency = currencyRepository.save(new Currency(coreCurrency, coreCurrency));
         }

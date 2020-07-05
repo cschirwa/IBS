@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mobile.device.Device;
+//import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,8 +72,8 @@ public class AuthenticationRestController {
     private ApplicationConfigurationProperties securityProperties;
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody final JwtAuthenticationRequest authenticationRequest, final Device device) throws AuthenticationException {
-        log.debug("Auth from device [{}]", device.toString());
+    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody final JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
+//        log.debug("Auth from device [{}]", device.toString());
         try {
             // Perform the security
             final Authentication authentication = authenticationManager.authenticate(
@@ -84,14 +84,14 @@ public class AuthenticationRestController {
 
             // Reload password post-security so we can generate token
             final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-            final String token = jwtTokenUtil.generateToken(userDetails, device);
+            final String token = jwtTokenUtil.generateToken(userDetails);
 
             Optional<User> user = userRepository.findByUsername(authenticationRequest.getUsername());
             if (user.isPresent()) {
                 User successUser = user.get();
                 Session session = new Session(token, successUser, null);
-                session.setDevicePlatform(device.getDevicePlatform().name());
-                session.setMobile(device.isMobile());
+//                session.setDevicePlatform(device.getDevicePlatform().name());
+//                session.setMobile(device.isMobile());
 
                 successUser.setLastLoginTime(new Date());
                 successUser.setFailedLogins(0);

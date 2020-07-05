@@ -2,7 +2,6 @@ package com.kt.ibs.controllers;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -21,11 +20,12 @@ import com.kt.ibs.security.JwtTokenUtil;
 import com.kt.ibs.service.CurrencyService;
 
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 public class CurrencyController {
 
-	private static final Logger LOGGER = Logger.getLogger(CurrencyController.class);
 	private static final String REQUEST = "REQUEST";
 	private static final String RESPONSE = "RESPONSE";
 
@@ -48,7 +48,7 @@ public class CurrencyController {
 			@ApiParam(value = "Authorization token", required = true) @RequestHeader("Authorization") String authorization)
 			throws IBSException {
 
-		LOGGER.info("IBS create currency : " + input);
+		log.info("IBS create currency : " + input);
 		RestResponse restResponse = currencyService.createCurrency(input);
 		return ResponseEntity.status(HttpStatus.OK).body(restResponse);
 	}
@@ -58,7 +58,7 @@ public class CurrencyController {
 	public ResponseEntity<RestResponse> fetchCurrencies(
 			@ApiParam(value = "Authorization token", required = true) @RequestHeader("Authorization") String authorization)
 			throws IBSException {
-		LOGGER.info("IBS fetch all currencies");
+		log.info("IBS fetch all currencies");
 
 		RestResponse restResponse = currencyService.fetchCurrencies();
 		return ResponseEntity.status(HttpStatus.OK).body(restResponse);

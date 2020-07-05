@@ -1,6 +1,5 @@
 package com.kt.ibs.controllers;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -18,14 +17,11 @@ import com.kt.ibs.exceptions.IBSException;
 import com.kt.ibs.response.RestResponse;
 import com.kt.ibs.security.JwtTokenUtil;
 import com.kt.ibs.service.AccountService;
-import com.kt.ibs.service.AccountTransactionService;
 
 import io.swagger.annotations.ApiParam;
 
 @RestController
 public class AccountsController {
-
-    private static final Logger LOGGER = Logger.getLogger(AccountsController.class);
 
     @Value("${jwt.header}")
     private String tokenHeader;
@@ -36,8 +32,6 @@ public class AccountsController {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    private AccountTransactionService accountTransactionService;
 
     @RequestMapping(value = "/ibs/api/customers/{username}/accounts", method = RequestMethod.GET)
     @ResponseBody
@@ -70,20 +64,20 @@ public class AccountsController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @RequestMapping(value = "/ibs/api/customers/{username}/accounts/{accountNumber}/transactions/{reference}", headers = "Accept=*/*", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<InputStreamResource> fetchAccountTransactionDocument(@PathVariable("username") final String username, @PathVariable("accountNumber") final String accountNumber,
-            @PathVariable("reference") final String reference) throws IBSException {
-        return accountTransactionService.generatePaymentReport(username, accountNumber, reference);
-    }
+//    @RequestMapping(value = "/ibs/api/customers/{username}/accounts/{accountNumber}/transactions/{reference}", headers = "Accept=*/*", method = RequestMethod.GET)
+//    @ResponseBody
+//    public ResponseEntity<InputStreamResource> fetchAccountTransactionDocument(@PathVariable("username") final String username, @PathVariable("accountNumber") final String accountNumber,
+//            @PathVariable("reference") final String reference) throws IBSException {
+//        return accountTransactionService.generatePaymentReport(username, accountNumber, reference);
+//    }
 
-    @RequestMapping(value = "/ibs/api/customers/{username}/accounts/{accountNumber}/statements/", headers = "Accept=*/*", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<InputStreamResource> fetchAccountStatement(@PathVariable("username") final String username, @PathVariable("accountNumber") final String accountNumber,
-            @RequestParam(value = "startDate", required = false) final String startDate, @RequestParam(value = "endDate", required = false) final String endDate) throws Exception
-             {
-        return accountTransactionService.generateStatementReport(username, accountNumber);
-    }
+//    @RequestMapping(value = "/ibs/api/customers/{username}/accounts/{accountNumber}/statements/", headers = "Accept=*/*", method = RequestMethod.GET)
+//    @ResponseBody
+//    public ResponseEntity<InputStreamResource> fetchAccountStatement(@PathVariable("username") final String username, @PathVariable("accountNumber") final String accountNumber,
+//            @RequestParam(value = "startDate", required = false) final String startDate, @RequestParam(value = "endDate", required = false) final String endDate) throws Exception
+//             {
+//        return accountTransactionService.generateStatementReport(username, accountNumber);
+//    }
 
 
 }
