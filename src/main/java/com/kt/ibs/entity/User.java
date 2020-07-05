@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
@@ -86,9 +87,9 @@ public abstract class User {
     private Date lastLoginTime;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JoinTable(name = "USER_AUTHORITY", joinColumns = {
-            @JoinColumn(name = "USER_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
-                    @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+//    @JoinTable(name = "USER_AUTHORITY", joinColumns = {
+//            @JoinColumn(name = "USER_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
+//                    @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
     private Set<Authority> authorities;
 
     public User(final String username, final String password) {
